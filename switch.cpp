@@ -64,8 +64,8 @@ void swm_fsm (void) {
 
       // complete this code to achieve the FSM functionality  ++++++++++
       case SW_IDLE:
-				gb_swm_rise_evnt = false;
-			  gb_swm_to_evnt = false;
+	gb_swm_rise_evnt = false;
+	gb_swm_to_evnt = false;
 			
         if(gb_swm_fall_evnt)
         {
@@ -75,8 +75,8 @@ void swm_fsm (void) {
         }
         break;
       case SW_IN:
-				gb_swm_rise_evnt = false;
-			  gb_swm_fall_evnt = false;
+	gb_swm_rise_evnt = false;
+	gb_swm_fall_evnt = false;
 			
         if (gb_swm_to_evnt)
         {
@@ -93,7 +93,7 @@ void swm_fsm (void) {
         }
         break;
       case SW_OUT:
-				gb_swm_fall_evnt = false;
+	gb_swm_fall_evnt = false;
 			
         if(gb_swm_to_evnt)
         {
@@ -102,7 +102,7 @@ void swm_fsm (void) {
           gb_swm_long_msg = !gb_swm_msg;
           g_swm_state = SW_IDLE;
         }
-		else if (gb_swm_rise_evnt)
+	else if (gb_swm_rise_evnt)
         {
           gb_swm_rise_evnt = false;
           g_sw_to.detach();
@@ -111,7 +111,7 @@ void swm_fsm (void) {
           gb_swm_long_msg = !gb_swm_msg;
           g_swm_state = SW_IDLE;
         }
-		else{}
+	else{}
         break;
       //  ----------------------------------------------------------------
     } // switch (swm_state)
