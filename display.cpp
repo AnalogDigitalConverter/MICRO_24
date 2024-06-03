@@ -62,7 +62,7 @@ void display_fsm (void) {
 	switch (g_dpl_state) 
 	{
 	  case DPL_OFF:
-			gb_display_off_msg = false;
+		  gb_display_off_msg = false;
 		  gb_display_update_msg = false;
 		  gb_display_brightness_msg = false;
 		  gb_mux_evnt = false;
@@ -104,29 +104,34 @@ void display_fsm (void) {
 			
 		  // display multiplex
       if (gb_mux_evnt)
-	    {
+      {
         gb_mux_evnt = false;
-	      gb_display_select_msg = !gb_display_select_msg; 		//toggle
-				if (gb_display_select_msg) 
-		    {
-		      *gp_dsr = 0;
-					/*********THIS SIGNIFICANTLY IMPROVES SHADOWS********/
-					#ifdef SHADOW_HACK
-					  for (int i = 0; i < SHADOW_FACTOR; i++){*gp_dsr = 0;}
-					#endif
-		      *gp_seven_seg = (dpl_code >> 8);
-		      gp_dsl->pulsewidth_us(pulse_width);
-		    } //gb_display_select_msg
-		    else 
-		    {
-		      *gp_dsl = 0;
-					/*********THIS SIGNIFICANTLY IMPROVES SHADOWS********/
-					#ifdef SHADOW_HACK
-					  for (int i = 0; i < SHADOW_FACTOR; i++){*gp_dsl = 0;}
-					#endif
-		      *gp_seven_seg = dpl_code;
-		      gp_dsr->pulsewidth_us(pulse_width);
-		    } //!gb_display_select_msg
+	gb_display_select_msg = !gb_display_select_msg; 		//toggle
+	
+	if (gb_display_select_msg)
+	{
+	  *gp_dsr = 0;
+		
+		/*********THIS SIGNIFICANTLY IMPROVES SHADOWS********/
+		#ifdef SHADOW_HACK
+		  for (int i = 0; i < SHADOW_FACTOR; i++){*gp_dsr = 0;}
+		#endif
+		
+	  *gp_seven_seg = (dpl_code >> 8);
+	  gp_dsl->pulsewidth_us(pulse_width);
+	} //gb_display_select_msg
+	else 
+	{
+	  *gp_dsl = 0;
+	
+		/*********THIS SIGNIFICANTLY IMPROVES SHADOWS********/
+		#ifdef SHADOW_HACK
+		  for (int i = 0; i < SHADOW_FACTOR; i++){*gp_dsl = 0;}
+		#endif
+	      
+	  *gp_seven_seg = dpl_code;
+	  gp_dsr->pulsewidth_us(pulse_width);
+	} //!gb_display_select_msg
       } //gb_mux_evnt
 		
 	    if (gb_display_off_msg) 
